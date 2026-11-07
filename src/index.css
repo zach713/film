@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-serif: 'Playfair Display', 'Cinzel', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Space Mono', monospace;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-portal-pink: #FF007A;
+  --color-portal-orange: #FF5E00;
+  --color-portal-dark: #090B10;
+  --color-portal-card: #0D1019;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #07080C;
+  color: #FFFFFF;
+  margin: 0;
+  padding: 0;
+}
+
+.font-serif-movie {
+  font-family: 'Playfair Display', 'Cinzel', Georgia, serif;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Diagonal striped hazard/candy ribbon from the user screenshot */
+.hazard-ribbon {
+  background: repeating-linear-gradient(
+    -45deg,
+    #FF007A,
+    #FF007A 16px,
+    #FF5E00 16px,
+    #FF5E00 32px
+  );
+  animation: stripe-pan 25s linear infinite;
+}
+
+@keyframes stripe-pan {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+/* Neon Glows matching the exact screenshot aesthetics */
+.neon-avatar-ring {
+  box-shadow: 0 0 20px #FF007A, 0 0 45px rgba(255, 0, 122, 0.6), inset 0 0 15px rgba(255, 0, 122, 0.5);
+}
+
+.neon-btn-glow {
+  box-shadow: 0 0 30px rgba(255, 0, 122, 0.65), 0 0 60px rgba(255, 94, 0, 0.35);
+}
+
+.neon-btn-glow:hover {
+  box-shadow: 0 0 45px rgba(255, 0, 122, 0.85), 0 0 80px rgba(255, 94, 0, 0.55);
+}
+
+.neon-text-pink {
+  text-shadow: 0 0 10px rgba(255, 0, 122, 0.8), 0 0 20px rgba(255, 0, 122, 0.4);
+}
+
+.neon-text-green {
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

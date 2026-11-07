@@ -1,0 +1,6 @@
+{
+  "name": "Campus Drivers - Exclusive 4K Movie Portal",
+  "description": "Exclusive download and streaming portal for Campus Drivers, featuring 4K UHD masters, high-speed cloud mirrors, offline downloads, film trailer, and soundtrack.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
