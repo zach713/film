@@ -4,7 +4,7 @@ import { FILM_DETAILS } from '../../lastSunriseData';
 import { ThemePalette } from '../../themePalettes';
 
 interface PortalMainCardProps {
-  onOpenDownload: () => void;
+  onOpenDownload?: () => void;
   onOpenStream: () => void;
   activeStreamsCount: number;
   theme: ThemePalette;

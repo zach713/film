@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { Palette } from 'lucide-react';
 import { THEME_PALETTES, ThemePalette } from './themePalettes';
 import { PortalMainCard } from './components/portal/PortalMainCard';
-import { SyncDownloadModal } from './components/portal/SyncDownloadModal';
 import { StreamPlayerModal } from './components/portal/StreamPlayerModal';
+import { SyncDownloadModal } from './components/portal/SyncDownloadModal';
 import { SolarBackground } from './components/portal/SolarBackground';
 
 export default function App() {
-  // Use Hyper Pink & Orange theme matching the exact neon styling of the screenshot
-  const [currentTheme] = useState<ThemePalette>(THEME_PALETTES[4]); // Hyper Pink & Orange (#FF007A)
-  // Modal defaults to open so user immediately sees their requested Syncing Files screen
-  const [isDownloadOpen, setIsDownloadOpen] = useState(true);
+  // Changed active color to Electric Cyan & Cobalt (#00F0FF)
+  const [currentTheme, setCurrentTheme] = useState<ThemePalette>(THEME_PALETTES[0]);
+  const [isDownloadOpen, setIsDownloadOpen] = useState(false);
   const [isStreamOpen, setIsStreamOpen] = useState(false);
   const [activeStreamsCount, setActiveStreamsCount] = useState(14820);
 
@@ -22,11 +22,46 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#07080c] text-white flex flex-col items-center justify-center font-sans selection:bg-[#FF007A] selection:text-white relative p-4 sm:p-8">
-      {/* Ambient Animated Background Canvas */}
+    <div
+      className="min-h-screen bg-[#07080c] text-white flex flex-col items-center justify-center font-sans relative p-4 sm:p-8"
+      style={{
+        // Dynamic selection color matching active theme
+        caretColor: currentTheme.primary,
+      }}
+    >
+      {/* Ambient Animated Background Canvas with current theme */}
       <SolarBackground currentTheme={currentTheme} />
 
-      {/* Main Standalone Centered Card (Exactly matching user's design) */}
+      {/* Floating Minimalist Color Palette Picker */}
+      <div className="fixed top-4 right-4 z-40 flex items-center gap-1.5 bg-[#0e111c]/90 backdrop-blur-md border border-neutral-800/80 px-3 py-1.5 rounded-full shadow-xl">
+        <Palette className="w-3.5 h-3.5 text-neutral-400 mr-0.5" />
+        {THEME_PALETTES.map((theme) => {
+          const isSelected = theme.id === currentTheme.id;
+          return (
+            <button
+              key={theme.id}
+              onClick={() => setCurrentTheme(theme)}
+              title={theme.name}
+              aria-label={`Switch to ${theme.name}`}
+              className={`w-5 h-5 rounded-full transition-all cursor-pointer relative flex items-center justify-center ${
+                isSelected
+                  ? 'scale-125 ring-2 ring-white shadow-lg'
+                  : 'hover:scale-110 opacity-70 hover:opacity-100'
+              }`}
+              style={{
+                backgroundColor: theme.primary,
+                boxShadow: isSelected ? `0 0 10px ${theme.primary}` : undefined,
+              }}
+            >
+              {isSelected && (
+                <span className="w-1.5 h-1.5 rounded-full bg-white block" />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Main Standalone Centered Card */}
       <main className="w-full max-w-xl flex flex-col items-center justify-center my-auto">
         <PortalMainCard
           onOpenDownload={() => setIsDownloadOpen(true)}
@@ -36,7 +71,7 @@ export default function App() {
         />
       </main>
 
-      {/* Interactive Syncing Files & Download Modal (opens on CTA click) */}
+      {/* Syncing Files Modal (opens on download CTA and redirects to offer link) */}
       {isDownloadOpen && (
         <SyncDownloadModal
           onClose={() => setIsDownloadOpen(false)}
